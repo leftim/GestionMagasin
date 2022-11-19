@@ -1,6 +1,8 @@
 package com.example.gestionmagasin.services;
 
+import com.example.gestionmagasin.entities.Client;
 import com.example.gestionmagasin.entities.Facture;
+import com.example.gestionmagasin.repositories.ClientRepository;
 import com.example.gestionmagasin.repositories.FactureRepository;
 import org.springframework.stereotype.Service;
 
@@ -10,6 +12,7 @@ import java.util.List;
 public class FactureServiceIMP implements FactureService{
 
     FactureRepository factureRepository;
+    ClientRepository clientRepository;
 
     @Override
     public List<Facture> retrieveAllFactures() {
@@ -27,5 +30,21 @@ public class FactureServiceIMP implements FactureService{
     @Override
     public Facture retrieveFacture(Long id) {
         return factureRepository.findById(id).orElse(null);
+    }
+
+    public List<Facture> getFacturesByClient(Long idClient){
+        Client client= clientRepository.findById(idClient).orElse(null);
+        if(client != null){
+            return client.getFacture();
+        }
+
+        return null;
+    }
+    @Override
+    public Facture addFacture(Facture f, Long idClient) {
+        Client client = clientRepository.findById(idClient).orElse(null);
+        if(client != null)
+            f.setClient(client);
+        return null;
     }
 }

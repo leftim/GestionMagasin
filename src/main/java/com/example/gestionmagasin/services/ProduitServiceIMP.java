@@ -1,13 +1,10 @@
 package com.example.gestionmagasin.services;
 
-import com.example.gestionmagasin.entities.Produit;
-import com.example.gestionmagasin.entities.Rayon;
-import com.example.gestionmagasin.entities.Stock;
-import com.example.gestionmagasin.repositories.ProduitRepository;
-import com.example.gestionmagasin.repositories.RayonRepository;
-import com.example.gestionmagasin.repositories.StockRepository;
+import com.example.gestionmagasin.entities.*;
+import com.example.gestionmagasin.repositories.*;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -16,6 +13,8 @@ public class ProduitServiceIMP implements ProduitService{
     ProduitRepository produitRepository;
     RayonRepository rayonRepository;
     StockRepository stockRepository;
+    FournisseurRepository fournisseurRepository;
+
     @Override
     public List<Produit> retrieveAllProduits() {
         return produitRepository.findAll();
@@ -23,8 +22,9 @@ public class ProduitServiceIMP implements ProduitService{
 
     @Override
     public Produit addProduit(Produit p, Long idRayon, Long idStock) {
-        Rayon r = rayonRepository.findById(idRayon).orElse(null);
         Stock s = stockRepository.findById(idStock).orElse(null);
+        Rayon r = rayonRepository.findById(idRayon).orElse(null);
+
         p.setRayon(r);
         p.setStock(s);
 
@@ -32,11 +32,12 @@ public class ProduitServiceIMP implements ProduitService{
 
     }
 
+
     @Override
     public Produit retrieveProduit(Long id) {
         return produitRepository.findById(id).orElse(null);
     }
-
+    @Override
     public void assignProduitToStock(Long idProduit, Long idStock){
 
         Produit produit = produitRepository.findById(idProduit).orElse(null);
@@ -48,4 +49,21 @@ public class ProduitServiceIMP implements ProduitService{
         }
 
     }
+
+    @Override
+    public void assignFournisseurToProduit(Long fournisseurId, Long produitId) {
+        Produit produit = produitRepository.findById(produitId).orElse(null);
+        Fournisseur fournisseur = fournisseurRepository.findById(fournisseurId).orElse(null);
+        if (produit != null && fournisseur != null) {
+            produit.getFournisseur().add(fournisseur);
+            produitRepository.save(produit);
+        }
+    }
+
+    @Override
+    public float getRevenuBrutProduit(Long idProduit, Date startDate, Date endDate) {
+        return 0;
+    }
+
+
 }

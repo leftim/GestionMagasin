@@ -34,6 +34,10 @@ public class ProduitRestController {
     void assignProduitToStock(Long idProduit, Long idStock){
          produitService.assignProduitToStock(idProduit,idStock);
     }
+    @PutMapping("/assignFtoP/{FournisseurId}/{produitId}")
+    void assignFournisseurToProduit(@PathVariable(value="FournisseurId") Long fournisseurId,@PathVariable(value="produitId") Long produitId){
+        produitService.assignFournisseurToProduit(fournisseurId,produitId);
+    }
 
 
 

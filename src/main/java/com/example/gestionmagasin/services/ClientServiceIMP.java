@@ -1,10 +1,12 @@
 package com.example.gestionmagasin.services;
 
+import com.example.gestionmagasin.entities.CategorieClient;
 import com.example.gestionmagasin.entities.Client;
 import com.example.gestionmagasin.repositories.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -37,4 +39,12 @@ public class ClientServiceIMP implements ClientService {
     public Client retrieveClient(Long id) {
         return clientRepository.findById(id).orElse(null);
     }
+
+    @Override
+    public float getChiffreAffaireParCategorieClient(CategorieClient categorieClient, Date startDate, Date endDate) {
+        return 0;
+    }
+    /*public float getChiffreAffaireParCategorieClient(CategorieClient categorieClient,Date startDate, Date endDate){
+return null;
+    }*/
 }

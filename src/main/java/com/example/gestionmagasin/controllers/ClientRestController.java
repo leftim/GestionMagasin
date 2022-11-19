@@ -36,7 +36,7 @@ public class ClientRestController {
 
     }
 
-@GetMapping("/retrieveClient/{id}")
+    @GetMapping("/retrieveClient/{id}")
     public Client retrieveClient(@PathVariable(value="id") Long id){
         return clientService.retrieveClient(id);
 }
